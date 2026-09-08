@@ -1,185 +1,88 @@
-/* =========================================================
-   🗺️ MAPA DE IMPACTO + 🌐 COMUNIDAD
-========================================================= */
-
 document.addEventListener("DOMContentLoaded", () => {
 
-    /* =====================================================
-       URL DEL MAPA DE IMPACTO
+    /* =========================================================
+       CONFIGURACIÓN
+    ========================================================= */
 
-       Cuando tengas la URL definitiva, me la das y
-       la colocamos aquí sin que tengas que buscar nada.
-    ===================================================== */
+    const config = window.PROJECT_CONFIG || {};
 
-    const IMPACT_MAP_URL = "";
+    const urls = {
+        talentos: config.GOOGLE_FORM_TALENTOS_URL || "",
+        propuestas: config.GOOGLE_FORM_PROPUESTAS_URL || "",
+        participacion: config.GOOGLE_FORM_PARTICIPACION_URL || "",
+        padlet: config.PADLET_URL || ""
+    };
 
 
-    /* =====================================================
-       RECUPERAR MAPA
-    ===================================================== */
+    /* =========================================================
+       BOTONES QUE ABREN FORMULARIOS / ENLACES
+    ========================================================= */
 
-    const mapSection =
-        document.querySelector(".map-section");
+    document.querySelectorAll("[data-external]").forEach((button) => {
 
+        button.addEventListener("click", () => {
+
+            const destination = button.dataset.external;
+            const url = urls[destination];
+
+            if (!url) {
+                alert(
+                    "Este enlace todavía no está configurado. Podemos agregarlo después."
+                );
+                return;
+            }
+
+            window.open(
+                url,
+                "_blank",
+                "noopener,noreferrer"
+            );
+
+        });
+
+    });
+
+
+    /* =========================================================
+       MAPA
+    ========================================================= */
+
+    const mapSection = document.querySelector(".map-section");
 
     if (mapSection) {
 
-        mapSection.id = "mapa";
-
-        mapSection.classList.remove(
-            "hidden"
-        );
-
-        mapSection.dataset.hiddenPanel =
-            "false";
-
-
-        mapSection.classList.add(
-            "impact-map-panel"
-        );
-
-
-        /* Texto explicativo */
-
-        const heading =
-            mapSection.querySelector(
-                ".section-heading"
-            );
-
-
-        if (
-            heading &&
-            !heading.querySelector(
-                ".impact-map-intro"
-            )
-        ) {
-
-            const intro =
-                document.createElement(
-                    "p"
-                );
-
-
-            intro.className =
-                "impact-map-intro";
-
-
-            intro.textContent =
-                "Explora espacios concretos donde una idea puede convertirse en una acción que mejore nuestra comunidad educativa.";
-
-
-            heading.appendChild(
-                intro
-            );
-
-        }
-
-
-        /* Botón del mapa */
-
-        if (
-            !mapSection.querySelector(
-                ".impact-map-url-button"
-            )
-        ) {
-
-            const button =
-                document.createElement(
-                    "button"
-                );
-
-
-            button.type = "button";
-
-            button.className =
-                "btn btn-primary impact-map-url-button";
-
-
-            button.innerHTML = `
-                VER MAPA DE IMPACTO
-                <i class="fa-solid fa-arrow-up-right-from-square"></i>
-            `;
-
-
-            button.addEventListener(
-                "click",
-                () => {
-
-                    if (
-                        !IMPACT_MAP_URL
-                    ) {
-
-                        showInfoModal(
-                            "MAPA DE IMPACTO",
-                            "Aquí irá el enlace del mapa de impacto. Cuando tengas la URL, podemos colocarla directamente en la página."
-                        );
-
-                        return;
-                    }
-
-
-                    window.open(
-                        IMPACT_MAP_URL,
-                        "_blank",
-                        "noopener,noreferrer"
-                    );
-
-                }
-            );
-
-
-            if (heading) {
-                heading.appendChild(
-                    button
-                );
-            }
-
-        }
-
-
-        /* Reescribir ejemplos concretos */
-
         const mapExamples = {
+
+            "Patio 1":
+                "Recreos activos, juegos cooperativos y actividades de convivencia.",
+
+            "Patio 2":
+                "Espacio para actividades, encuentros estudiantiles y nuevas propuestas.",
 
             "Biblioteca":
                 "Club de lectura, banco de libros y zona silenciosa de estudio.",
 
-            "Área verde":
+            "áreas verdes 1":
                 "Huerto escolar, reciclaje y recuperación de áreas verdes.",
 
-            "Patio":
-                "Recreos activos, juegos cooperativos y actividades de convivencia.",
+            "áreas verdes 2":
+                "Cuidado de plantas, campañas ambientales y espacios de descanso.",
 
-            "Zona deportiva":
-                "Torneos intersalones, préstamo de implementos y actividades deportivas.",
-
-            "Espacio comunitario":
-                "Mural estudiantil, buzón de ideas y campañas de convivencia.",
-
-            "Zona tecnológica":
-                "Club de programación, proyectos digitales y laboratorio creativo."
-
+            "piscina":
+                "Actividades deportivas, recreativas y propuestas para mejorar el espacio."
         };
 
 
         mapSection
-            .querySelectorAll(
-                ".map-space"
-            )
+            .querySelectorAll(".map-space")
             .forEach((space) => {
 
                 const title =
-                    space.textContent
-                        .trim()
-                        .replace(
-                            /\s+/g,
-                            " "
-                        );
-
+                    space.dataset.mapSpace ||
+                    space.textContent.trim();
 
                 const example =
                     mapExamples[title];
-
 
                 if (!example) {
                     return;
@@ -187,17 +90,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
                 let exampleElement =
-                    space.querySelector(
-                        ".map-example"
-                    );
+                    space.querySelector(".map-example");
 
 
                 if (!exampleElement) {
 
                     exampleElement =
-                        document.createElement(
-                            "span"
-                        );
+                        document.createElement("span");
 
                     exampleElement.className =
                         "map-example";
@@ -212,52 +111,45 @@ document.addEventListener("DOMContentLoaded", () => {
                 exampleElement.textContent =
                     example;
 
+
+                /* Seleccionar espacio */
+
+                space.addEventListener(
+                    "click",
+                    () => {
+
+                        mapSection
+                            .querySelectorAll(".map-space")
+                            .forEach((item) => {
+                                item.classList.remove(
+                                    "map-selected"
+                                );
+                            });
+
+                        space.classList.add(
+                            "map-selected"
+                        );
+
+                    }
+                );
+
             });
 
     }
 
 
-    /* =====================================================
-       AGREGAR MAPA AL MENÚ
-    ===================================================== */
+    /* =========================================================
+       MENÚ → MAPA
+    ========================================================= */
 
     const nav =
-        document.querySelector(
-            ".main-nav"
-        );
+        document.querySelector(".main-nav");
+
+    const mapLink =
+        nav?.querySelector('[href="#mapa"]');
 
 
-    if (
-        nav &&
-        !nav.querySelector(
-            '[href="#mapa"]'
-        )
-    ) {
-
-        const mapLink =
-            document.createElement(
-                "a"
-            );
-
-
-        mapLink.href =
-            "#mapa";
-
-
-        mapLink.textContent =
-            "Mapa";
-
-
-        nav.insertBefore(
-            mapLink,
-            nav.querySelector(
-                '[href="#impacto"]'
-            ) ||
-            nav.querySelector(
-                ".nav-highlight"
-            )
-        );
-
+    if (mapLink) {
 
         mapLink.addEventListener(
             "click",
@@ -265,37 +157,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 event.preventDefault();
 
+                const target =
+                    document.getElementById("mapa");
 
-                const panels =
-                    document.querySelectorAll(
-                        "main > section"
-                    );
+                if (target) {
 
-
-                panels.forEach(
-                    (section) => {
-
-                        section.classList.remove(
-                            "panel-active"
-                        );
-
-                    }
-                );
-
-
-                if (mapSection) {
-
-                    mapSection.classList.add(
-                        "panel-active"
-                    );
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
+                    });
 
                 }
-
-
-                window.scrollTo({
-                    top: 0,
-                    behavior: "smooth"
-                });
 
             }
         );
@@ -303,158 +175,82 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    /* =====================================================
-       CREAR PANEL FINAL DE COMUNIDAD
-    ===================================================== */
+    /* =========================================================
+       MENÚ MÓVIL
+    ========================================================= */
 
-    if (
-        !document.getElementById(
-            "comunidad"
-        )
-    ) {
+    const menuToggle =
+        document.querySelector(".menu-toggle");
 
-        const community =
-            document.createElement(
-                "section"
-            );
+    const mainNav =
+        document.querySelector(".main-nav");
 
 
-        community.id =
-            "comunidad";
+    if (menuToggle && mainNav) {
 
-
-        community.className =
-            "community-panel";
-
-
-        community.innerHTML = `
-
-            <div class="container">
-
-                <div class="community-layout">
-
-                    <div class="community-logo-area">
-
-                        <div class="community-logo-ring"></div>
-
-                        <div class="community-logo-star community-star-one">
-                            ✦
-                        </div>
-
-                        <div class="community-logo-star community-star-two">
-                            ✦
-                        </div>
-
-                        <img
-                            src="/static/images/logo.png"
-                            alt="Tu Talento Puede Cambiar el Colegio"
-                            class="community-logo"
-                        >
-
-                    </div>
-
-
-                    <div class="community-copy">
-
-                        <span class="eyebrow dark-eyebrow">
-                            NUESTRA COMUNIDAD
-                        </span>
-
-                        <h2>
-                            Escanea y sigue
-                            <span>nuestra comunidad</span>
-                        </h2>
-
-                        <p>
-                            Mantente al tanto de las novedades,
-                            propuestas, actividades y nuevas formas
-                            de participar en nuestro colegio.
-                        </p>
-
-
-                        <div class="community-qr-area">
-
-                            <div
-                                id="communityQrContainer"
-                            >
-                                <div class="community-qr-placeholder">
-
-                                    <i class="fa-solid fa-qrcode"></i>
-
-                                    <span>
-                                        AQUÍ IRÁ<br>
-                                        EL QR DE<br>
-                                        NUESTRA RED SOCIAL
-                                    </span>
-
-                                </div>
-                            </div>
-
-
-                            <div class="community-qr-text">
-
-                                <strong>
-                                    Escanea el QR
-                                </strong>
-
-                                <span>
-                                    Síguenos y continúa
-                                    formando parte de nuestra
-                                    comunidad.
-                                </span>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-        `;
-
-
-        document
-            .querySelector("main")
-            .appendChild(
-                community
-            );
-
-
-        /* Intentar cargar QR */
-
-        const qr =
-            new Image();
-
-
-        qr.src =
-            "/static/images/qr-red-social.png";
-
-
-        qr.className =
-            "community-qr";
-
-
-        qr.alt =
-            "QR de la red social";
-
-
-        qr.onload =
+        menuToggle.addEventListener(
+            "click",
             () => {
 
-                const container =
-                    document.getElementById(
-                        "communityQrContainer"
+                mainNav.classList.toggle(
+                    "nav-open"
+                );
+
+                menuToggle.classList.toggle(
+                    "active"
+                );
+
+            }
+        );
+
+
+        mainNav
+            .querySelectorAll("a")
+            .forEach((link) => {
+
+                link.addEventListener(
+                    "click",
+                    () => {
+
+                        mainNav.classList.remove(
+                            "nav-open"
+                        );
+
+                        menuToggle.classList.remove(
+                            "active"
+                        );
+
+                    }
+                );
+
+            });
+
+    }
+
+
+    /* =========================================================
+       HEADER AL HACER SCROLL
+    ========================================================= */
+
+    const header =
+        document.querySelector(".site-header");
+
+
+    if (header) {
+
+        const updateHeader =
+            () => {
+
+                if (window.scrollY > 30) {
+
+                    header.classList.add(
+                        "header-scrolled"
                     );
 
+                } else {
 
-                if (container) {
-
-                    container.innerHTML = "";
-
-                    container.appendChild(
-                        qr
+                    header.classList.remove(
+                        "header-scrolled"
                     );
 
                 }
@@ -462,88 +258,405 @@ document.addEventListener("DOMContentLoaded", () => {
             };
 
 
-        /* Si todavía no existe el QR,
-           dejamos el bonito placeholder */
+        window.addEventListener(
+            "scroll",
+            updateHeader
+        );
 
-        qr.onerror =
-            () => {
+        updateHeader();
 
-                console.log(
-                    "QR de red social todavía no agregado."
-                );
-
-            };
+    }
 
 
-        /* =================================================
-           LINK DEL MENÚ
-        ================================================= */
+    /* =========================================================
+       ANIMACIONES AL APARECER
+    ========================================================= */
 
-        if (
-            nav &&
-            !nav.querySelector(
-                '[href="#comunidad"]'
-            )
-        ) {
-
-            const communityLink =
-                document.createElement(
-                    "a"
-                );
+    const revealElements =
+        document.querySelectorAll(
+            ".section-heading, .talent-card, .proposal-card, .mission-card, .participation-card, .testimonial-card, .before-after-grid > *"
+        );
 
 
-            communityLink.href =
-                "#comunidad";
+    if ("IntersectionObserver" in window) {
 
+        const observer =
+            new IntersectionObserver(
+                (entries) => {
 
-            communityLink.textContent =
-                "Comunidad";
+                    entries.forEach((entry) => {
 
+                        if (
+                            entry.isIntersecting
+                        ) {
 
-            nav.appendChild(
-                communityLink
+                            entry.target.classList.add(
+                                "revealed"
+                            );
+
+                            observer.unobserve(
+                                entry.target
+                            );
+
+                        }
+
+                    });
+
+                },
+                {
+                    threshold: 0.12
+                }
             );
 
 
-            communityLink.addEventListener(
+        revealElements.forEach((element) => {
+
+            element.classList.add(
+                "scroll-reveal"
+            );
+
+            observer.observe(
+                element
+            );
+
+        });
+
+    }
+
+
+    /* =========================================================
+       CONTADORES DE ESTADÍSTICAS
+    ========================================================= */
+
+    const counters =
+        document.querySelectorAll(
+            "[data-counter]"
+        );
+
+
+    counters.forEach((counter) => {
+
+        const target =
+            Number(
+                counter.dataset.counter
+            );
+
+        if (!Number.isFinite(target)) {
+            return;
+        }
+
+
+        counter.textContent = "0";
+
+
+        if (!("IntersectionObserver" in window)) {
+
+            counter.textContent =
+                target.toLocaleString();
+
+            return;
+
+        }
+
+
+        const counterObserver =
+            new IntersectionObserver(
+                (entries, observer) => {
+
+                    if (!entries[0].isIntersecting) {
+                        return;
+                    }
+
+
+                    let current = 0;
+
+                    const duration = 1200;
+
+                    const start =
+                        performance.now();
+
+
+                    const animate =
+                        (time) => {
+
+                            const progress =
+                                Math.min(
+                                    (time - start) /
+                                    duration,
+                                    1
+                                );
+
+
+                            current =
+                                Math.floor(
+                                    progress * target
+                                );
+
+
+                            counter.textContent =
+                                current.toLocaleString();
+
+
+                            if (
+                                progress < 1
+                            ) {
+
+                                requestAnimationFrame(
+                                    animate
+                                );
+
+                            } else {
+
+                                counter.textContent =
+                                    target.toLocaleString();
+
+                            }
+
+                        };
+
+
+                    requestAnimationFrame(
+                        animate
+                    );
+
+
+                    observer.unobserve(
+                        counter
+                    );
+
+                },
+                {
+                    threshold: 0.6
+                }
+            );
+
+
+        counterObserver.observe(
+            counter
+        );
+
+    });
+
+
+    /* =========================================================
+       BOTONES DE MISIONES
+    ========================================================= */
+
+    document
+        .querySelectorAll("[data-mission]")
+        .forEach((button) => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const missionId =
+                        button.dataset.mission;
+
+                    const missions =
+                        window.MISSIONS_DATA || [];
+
+                    const mission =
+                        missions.find(
+                            (item) =>
+                                String(item.id) ===
+                                String(missionId)
+                        );
+
+
+                    if (!mission) {
+                        return;
+                    }
+
+
+                    const title =
+                        mission.title ||
+                        "Misión";
+
+
+                    const description =
+                        mission.description ||
+                        "Esta misión forma parte del proyecto.";
+
+
+                    if (
+                        typeof showInfoModal ===
+                        "function"
+                    ) {
+
+                        showInfoModal(
+                            title,
+                            description
+                        );
+
+                    } else {
+
+                        alert(
+                            `${title}\n\n${description}`
+                        );
+
+                    }
+
+                }
+            );
+
+        });
+
+
+    /* =========================================================
+       BOTONES DE APOYO
+    ========================================================= */
+
+    document
+        .querySelectorAll("[data-support]")
+        .forEach((button) => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    button.classList.toggle(
+                        "supported"
+                    );
+
+
+                    const number =
+                        button.querySelector(
+                            "[data-support-count]"
+                        );
+
+
+                    if (!number) {
+                        return;
+                    }
+
+
+                    let count =
+                        Number(
+                            number.textContent
+                        ) || 0;
+
+
+                    if (
+                        button.classList.contains(
+                            "supported"
+                        )
+                    ) {
+
+                        count++;
+
+                    } else {
+
+                        count =
+                            Math.max(
+                                0,
+                                count - 1
+                            );
+
+                    }
+
+
+                    number.textContent =
+                        count;
+
+                }
+            );
+
+        });
+
+
+    /* =========================================================
+       SMOOTH SCROLL PARA EL MENÚ
+    ========================================================= */
+
+    document
+        .querySelectorAll(
+            '.main-nav a[href^="#"]'
+        )
+        .forEach((link) => {
+
+            link.addEventListener(
                 "click",
                 (event) => {
+
+                    const id =
+                        link.getAttribute(
+                            "href"
+                        );
+
+
+                    if (
+                        !id ||
+                        id === "#"
+                    ) {
+                        return;
+                    }
+
+
+                    const target =
+                        document.querySelector(
+                            id
+                        );
+
+
+                    if (!target) {
+                        return;
+                    }
+
 
                     event.preventDefault();
 
 
-                    const panels =
-                        document.querySelectorAll(
-                            "main > section"
-                        );
-
-
-                    panels.forEach(
-                        (section) => {
-
-                            section.classList.remove(
-                                "panel-active"
-                            );
-
-                        }
-                    );
-
-
-                    community.classList.add(
-                        "panel-active"
-                    );
-
-
-                    window.scrollTo({
-                        top: 0,
-                        behavior: "smooth"
+                    target.scrollIntoView({
+                        behavior: "smooth",
+                        block: "start"
                     });
 
                 }
             );
 
-        }
+        });
 
-    }
+
+    /* =========================================================
+       EFECTO DE LUZ EN ELEMENTOS INTERACTIVOS
+    ========================================================= */
+
+    document
+        .querySelectorAll(
+            ".btn, .participation-card, .map-space"
+        )
+        .forEach((element) => {
+
+            element.addEventListener(
+                "mousemove",
+                (event) => {
+
+                    const rect =
+                        element.getBoundingClientRect();
+
+                    const x =
+                        event.clientX -
+                        rect.left;
+
+                    const y =
+                        event.clientY -
+                        rect.top;
+
+
+                    element.style.setProperty(
+                        "--mouse-x",
+                        `${x}px`
+                    );
+
+                    element.style.setProperty(
+                        "--mouse-y",
+                        `${y}px`
+                    );
+
+                }
+            );
+
+        });
 
 });

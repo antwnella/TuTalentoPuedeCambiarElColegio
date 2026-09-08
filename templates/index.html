@@ -1,79 +1,160 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{{ config.NOMBRE_COLEGIO }} | Tu Talento Puede Cambiar el Colegio</title>
+    <title>
+        {{ config.NOMBRE_COLEGIO }} | Tu Talento Puede Cambiar el Colegio
+    </title>
 
     <meta
         name="description"
-        content="Plataforma de participación estudiantil: descubre tu talento, propone ideas, apoya iniciativas y transforma tu colegio."
+        content="Plataforma de participación estudiantil: descubre tu talento, propone ideas y transforma tu colegio."
     >
 
-    <!-- FUENTES -->
+    <!-- =========================
+         FUENTES
+    ========================== -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Baloo+2:wght@400;500;600;700;800&family=DM+Sans:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800;900&display=swap00;900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Baloo+2:wght@400;500;600;700;800&family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Montserrat:wght@500;600;700;800;900&family=Pacifico&display=swap"
         rel="stylesheet"
     >
 
-    <!-- ICONOS -->
+    <!-- =========================
+         ICONOS
+    ========================== -->
+
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
 
-    <!-- CSS -->
+    <!-- =========================
+         CSS
+    ========================== -->
+
     <link
         rel="stylesheet"
         href="{{ url_for('static', filename='css/style.css') }}"
     >
 
+    <!-- =========================
+         CONFIGURACIÓN
+    ========================== -->
+
     <script>
+
         window.PROJECT_CONFIG = {
-            GOOGLE_FORM_TALENTOS_URL: {{ config.GOOGLE_FORM_TALENTOS_URL | tojson }},
-            GOOGLE_FORM_PROPUESTAS_URL: {{ config.GOOGLE_FORM_PROPUESTAS_URL | tojson }},
-            GOOGLE_FORM_PARTICIPACION_URL: {{ config.GOOGLE_FORM_PARTICIPACION_URL | tojson }},
-            PADLET_URL: {{ config.PADLET_URL | tojson }},
-            QR_IMAGE_PATH: {{ config.QR_IMAGE_PATH | tojson }}
+
+            GOOGLE_FORM_TALENTOS_URL:
+                {{ config.GOOGLE_FORM_TALENTOS_URL | tojson }},
+
+            GOOGLE_FORM_PROPUESTAS_URL:
+                {{ config.GOOGLE_FORM_PROPUESTAS_URL | tojson }},
+
+            GOOGLE_FORM_PARTICIPACION_URL:
+                {{ config.GOOGLE_FORM_PARTICIPACION_URL | tojson }},
+
+            PADLET_URL:
+                {{ config.PADLET_URL | tojson }},
+
+            QR_IMAGE_PATH:
+                {{ config.QR_IMAGE_PATH | tojson }}
+
         };
 
-        window.MISSIONS_DATA = {{ data.demoMissions | tojson }};
-        window.IDEAS_DATA = {{ data.demoIdeas | tojson }};
-        window.MAP_DATA = {{ data.demoImpactMap | tojson }};
+        window.MISSIONS_DATA =
+            {{ data.demoMissions | tojson }};
+
+        window.IDEAS_DATA =
+            {{ data.demoIdeas | tojson }};
+
+        window.MAP_DATA =
+            {{ data.demoImpactMap | tojson }};
+
     </script>
+
 </head>
+
 
 <body>
 
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
 <header class="site-header">
+
     <div class="nav-container">
 
         <a href="#inicio" class="brand">
+
             <span class="brand-logo">
-                <img src="/static/images/logo.png" alt="Logo del proyecto">
+
+                <img
+                    src="/static/images/logo.png"
+                    alt="Logo del proyecto"
+                >
+
             </span>
+
 
             <span class="brand-text">
+
                 <strong>TU TALENTO</strong>
-                <small>PUEDE CAMBIAR EL COLEGIO</small>
+
+                <small>
+                    PUEDE CAMBIAR EL COLEGIO
+                </small>
+
             </span>
+
         </a>
 
+
         <nav class="main-nav" id="mainNav">
-            <a href="#inicio">Inicio</a>
-            <a href="#descubre">Descubre</a>
-            <a href="#talentos">Talentos</a>
-            <a href="#propuestas">Propuestas</a>
-            <a href="#misiones">Misiones</a>
-            <a href="#impacto">Impacto</a>
-            <a href="#participa" class="nav-highlight">
+
+            <a href="#inicio">
+                Inicio
+            </a>
+
+            <a href="#descubre">
+                Descubre
+            </a>
+
+            <a href="#talentos">
+                Talentos
+            </a>
+
+            <a href="#propuestas">
+                Propuestas
+            </a>
+
+            <a href="#impacto">
+                Impacto
+            </a>
+
+            <a href="#mapa">
+                Mapa
+            </a>
+
+            <a
+                href="#propuestas"
+                class="nav-highlight"
+            >
                 Participa
             </a>
+
         </nav>
+
 
         <button
             class="menu-toggle"
@@ -81,88 +162,141 @@
             type="button"
             aria-label="Abrir menú"
         >
+
             <span></span>
             <span></span>
             <span></span>
+
         </button>
 
     </div>
+
 </header>
+
 
 
 <main>
 
-<section class="hero" id="inicio">
+
+<!-- =====================================================
+     HERO / INICIO
+===================================================== -->
+
+<section
+    class="hero"
+    id="inicio"
+>
 
     <div class="container hero-grid">
 
+
+        <!-- TEXTO -->
+
         <div class="hero-copy">
 
-            <span class="eyebrow hero-eyebrow">
-                PARTICIPACIÓN ESTUDIANTIL
-            </span>
 
             <div class="hero-logo-wrap">
+
                 <img
                     src="/static/images/logo.png"
                     alt="Logo del proyecto"
                     class="hero-logo"
                 >
+
             </div>
+
 
             <p class="hero-kicker">
                 TU VOZ. TU TALENTO. TU COLEGIO.
             </p>
 
+
             <h1>
-                TU TALENTO
-                <span>PUEDE CAMBIAR</span>
+
+                <strong class="titulo-talento">
+                    TU TALENTO
+                </strong>
+
+                <span>
+                    PUEDE CAMBIAR
+                </span>
+
                 EL COLEGIO
+
             </h1>
 
+
             <p class="hero-text">
+
                 Una plataforma para convertir tus talentos e ideas
                 en propuestas, acciones y cambios reales dentro de
                 nuestra comunidad educativa.
+
             </p>
 
+
             <div class="hero-actions">
+
 
                 <button
                     class="btn btn-primary"
                     data-external="talentos"
                     type="button"
                 >
+
                     <i class="fa-solid fa-sparkles"></i>
+
                     DESCUBRIR MI TALENTO
+
                 </button>
+
 
                 <a
                     href="#propuestas"
                     class="btn btn-glass"
                 >
+
                     <i class="fa-solid fa-lightbulb"></i>
+
                     VER PROPUESTAS
+
                 </a>
 
+
             </div>
 
+
             <div class="hero-flow">
+
                 <span>DESCUBRIR</span>
+
                 <i></i>
+
                 <span>PROPONER</span>
+
                 <i></i>
+
                 <span>APOYAR</span>
+
                 <i></i>
+
                 <span>ACTUAR</span>
+
                 <i></i>
+
                 <span>TRANSFORMAR</span>
+
             </div>
+
 
         </div>
 
 
+
+        <!-- IMAGEN -->
+
         <div class="hero-media">
+
 
             <div class="hero-image-card">
 
@@ -173,42 +307,83 @@
 
                 <div class="hero-image-overlay"></div>
 
+
                 <div class="hero-image-label">
+
                     <span>01</span>
-                    <strong>EMPIEZA AQUÍ</strong>
+
+                    <strong>
+                        EMPIEZA AQUÍ
+                    </strong>
+
                 </div>
 
             </div>
+
 
 
             <div class="hero-floating-card floating-card-top">
+
                 <span class="floating-icon">
+
                     <i class="fa-solid fa-users"></i>
+
                 </span>
 
+
                 <div>
-                    <strong>Tu voz importa</strong>
-                    <small>Participa en tu colegio</small>
+
+                    <strong>
+                        Tu voz importa
+                    </strong>
+
+                    <small>
+                        Participa en tu colegio
+                    </small>
+
                 </div>
+
             </div>
+
 
 
             <div class="hero-floating-card floating-card-bottom">
+
                 <span class="floating-icon coral">
+
                     <i class="fa-solid fa-arrow-trend-up"></i>
+
                 </span>
 
+
                 <div>
-                    <strong>Ideas que avanzan</strong>
-                    <small>De propuesta a acción</small>
+
+                    <strong>
+                        Ideas que avanzan
+                    </strong>
+
+                    <small>
+                        De propuesta a acción
+                    </small>
+
                 </div>
+
             </div>
+
 
 
             <div class="hero-number">
-                <span>IMPACTO</span>
-                <strong>+</strong>
+
+                <span>
+                    IMPACTO
+                </span>
+
+                <strong>
+                    +
+                </strong>
+
             </div>
+
 
         </div>
 
@@ -217,10 +392,18 @@
 </section>
 
 
+
+<!-- =====================================================
+     ESTADÍSTICAS
+===================================================== -->
+
 <section class="stats-section">
+
     <div class="container">
 
+
         <div class="stats-top">
+
             <span class="demo-label">
                 DATOS DE DEMOSTRACIÓN
             </span>
@@ -228,39 +411,96 @@
             <p>
                 Así podría verse el impacto de la participación estudiantil.
             </p>
+
         </div>
+
 
         <div class="stats-grid">
 
-            <div class="stat-card">
-                <strong class="counter" data-target="86">0</strong>
-                <span>PROPUESTAS</span>
-            </div>
 
             <div class="stat-card">
-                <strong class="counter" data-target="327">0</strong>
-                <span>ESTUDIANTES</span>
+
+                <strong
+                    class="counter"
+                    data-target="86"
+                >
+                    0
+                </strong>
+
+                <span>
+                    PROPUESTAS
+                </span>
+
             </div>
 
-            <div class="stat-card">
-                <strong class="counter" data-target="18">0</strong>
-                <span>IDEAS SELECCIONADAS</span>
-            </div>
 
             <div class="stat-card">
-                <strong class="counter" data-target="9">0</strong>
-                <span>MISIONES</span>
+
+                <strong
+                    class="counter"
+                    data-target="327"
+                >
+                    0
+                </strong>
+
+                <span>
+                    ESTUDIANTES
+                </span>
+
             </div>
+
+
+            <div class="stat-card">
+
+                <strong
+                    class="counter"
+                    data-target="18"
+                >
+                    0
+                </strong>
+
+                <span>
+                    IDEAS SELECCIONADAS
+                </span>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <strong
+                    class="counter"
+                    data-target="9"
+                >
+                    0
+                </strong>
+
+                <span>
+                    ACCIONES
+                </span>
+
+            </div>
+
 
         </div>
 
     </div>
+
 </section>
 
 
-<section class="section discover-section" id="descubre">
+
+<!-- =====================================================
+     DESCUBRE
+===================================================== -->
+
+<section
+    class="section discover-section"
+    id="descubre"
+>
 
     <div class="container">
+
 
         <div class="section-heading centered">
 
@@ -268,74 +508,116 @@
                 EMPIEZA POR TI
             </span>
 
+
             <h2>
                 ¿Y si tu talento
                 fuera el comienzo?
             </h2>
 
+
             <p>
+
                 No todas las personas aportan de la misma manera.
                 Algunas imaginan, otras crean, organizan,
                 comunican, investigan o inspiran.
+
             </p>
 
         </div>
 
 
+
         <div class="three-column-cards">
+
 
             <article class="feature-card">
 
-                <span class="feature-number">01</span>
+                <span class="feature-number">
+                    01
+                </span>
+
 
                 <div class="feature-icon">
+
                     <i class="fa-solid fa-compass"></i>
+
                 </div>
 
-                <h3>Descubre</h3>
+
+                <h3>
+                    Descubre
+                </h3>
+
 
                 <p>
+
                     Reconoce aquello que sabes hacer y que puede
                     aportar a tu comunidad.
+
                 </p>
 
             </article>
+
 
 
             <article class="feature-card featured">
 
-                <span class="feature-number">02</span>
+                <span class="feature-number">
+                    02
+                </span>
+
 
                 <div class="feature-icon">
+
                     <i class="fa-solid fa-lightbulb"></i>
+
                 </div>
 
-                <h3>Propón</h3>
+
+                <h3>
+                    Propón
+                </h3>
+
 
                 <p>
+
                     Convierte tus ideas en propuestas concretas
                     para mejorar el colegio.
+
                 </p>
 
             </article>
+
 
 
             <article class="feature-card">
 
-                <span class="feature-number">03</span>
+                <span class="feature-number">
+                    03
+                </span>
+
 
                 <div class="feature-icon">
+
                     <i class="fa-solid fa-people-group"></i>
+
                 </div>
 
-                <h3>Transforma</h3>
+
+                <h3>
+                    Transforma
+                </h3>
+
 
                 <p>
+
                     Súmate a otros estudiantes y convierte
                     una idea en una acción.
+
                 </p>
 
             </article>
+
 
         </div>
 
@@ -344,11 +626,21 @@
 </section>
 
 
-<section class="section section-soft talents-section" id="talentos">
+
+<!-- =====================================================
+     TALENTOS
+===================================================== -->
+
+<section
+    class="section section-soft talents-section"
+    id="talentos"
+>
 
     <div class="container two-column-layout">
 
+
         <div class="talent-image-column">
+
 
             <div class="large-photo-card talent-photo-card">
 
@@ -357,19 +649,28 @@
                     alt="Talentos estudiantiles"
                 >
 
+
                 <div class="photo-caption">
-                    <span>TU TALENTO</span>
+
+                    <span>
+                        TU TALENTO
+                    </span>
+
                     <strong>
                         Tiene un lugar aquí.
                     </strong>
+
                 </div>
 
             </div>
 
+
         </div>
 
 
+
         <div>
+
 
             <div class="section-heading">
 
@@ -377,74 +678,111 @@
                     DESCUBRIR
                 </span>
 
+
                 <h2>
+
                     Hay muchas formas
                     de hacer la diferencia.
+
                 </h2>
 
+
                 <p>
+
                     Encuentra el talento que más se parece a ti
                     y descubre cómo puede convertirse en una
                     herramienta para participar.
+
                 </p>
 
             </div>
 
 
+
             <div class="talent-grid">
 
+
                 <article class="talent-card">
+
                     <div class="talent-icon">
+
                         <i class="fa-solid fa-palette"></i>
+
                     </div>
 
-                    <h3>Crear</h3>
+                    <h3>
+                        Crear
+                    </h3>
 
                     <p>
                         Diseño, arte, creatividad y expresión.
                     </p>
+
                 </article>
 
 
+
                 <article class="talent-card">
+
                     <div class="talent-icon">
+
                         <i class="fa-solid fa-comments"></i>
+
                     </div>
 
-                    <h3>Comunicar</h3>
+                    <h3>
+                        Comunicar
+                    </h3>
 
                     <p>
                         Hablar, escribir, presentar y conectar.
                     </p>
+
                 </article>
 
 
+
                 <article class="talent-card">
+
                     <div class="talent-icon">
+
                         <i class="fa-solid fa-gears"></i>
+
                     </div>
 
-                    <h3>Organizar</h3>
+                    <h3>
+                        Organizar
+                    </h3>
 
                     <p>
                         Planificar, coordinar y hacer que ocurra.
                     </p>
+
                 </article>
 
 
+
                 <article class="talent-card">
+
                     <div class="talent-icon">
+
                         <i class="fa-solid fa-magnifying-glass"></i>
+
                     </div>
 
-                    <h3>Investigar</h3>
+                    <h3>
+                        Investigar
+                    </h3>
 
                     <p>
                         Observar, analizar y encontrar soluciones.
                     </p>
+
                 </article>
 
+
             </div>
+
 
 
             <button
@@ -452,9 +790,13 @@
                 data-external="talentos"
                 type="button"
             >
+
                 ENCUENTRA TU TALENTO
+
                 <i class="fa-solid fa-arrow-right"></i>
+
             </button>
+
 
         </div>
 
@@ -463,9 +805,18 @@
 </section>
 
 
-<section class="section proposal-section" id="propuestas">
+
+<!-- =====================================================
+     PROPUESTAS
+===================================================== -->
+
+<section
+    class="section proposal-section"
+    id="propuestas"
+>
 
     <div class="container proposal-grid">
+
 
         <div class="proposal-image-card">
 
@@ -476,58 +827,88 @@
 
             <div class="proposal-image-overlay"></div>
 
+
             <div class="proposal-image-content">
-                <span>02</span>
+
+                <span>
+                    02
+                </span>
+
                 <strong>
+
                     UNA IDEA PUEDE
                     EMPEZAR TODO.
+
                 </strong>
+
             </div>
 
         </div>
 
 
+
         <div class="proposal-copy">
+
 
             <span class="eyebrow light-eyebrow">
                 PROPONER
             </span>
 
+
             <h2>
+
                 Tu idea merece
                 ser escuchada.
+
             </h2>
 
+
             <p>
+
                 ¿Hay algo que debería mejorar en tu colegio?
                 Cuéntanos qué cambiarías, por qué y cómo
                 podríamos hacerlo juntos.
+
             </p>
+
+
 
             <div class="proposal-action-card">
 
+
                 <div class="proposal-action-icon">
+
                     <i class="fa-solid fa-paper-plane"></i>
+
                 </div>
 
+
                 <div>
+
                     <strong>
                         Presenta tu propuesta
                     </strong>
 
                     <p>
+
                         Completa el formulario y haz que
                         tu idea entre en el proceso.
+
                     </p>
+
                 </div>
+
 
                 <button
                     class="btn btn-light"
                     data-external="propuestas"
                     type="button"
                 >
+
                     PROPONER UNA IDEA
+
                 </button>
+
 
             </div>
 
@@ -538,83 +919,127 @@
 </section>
 
 
+
+<!-- =====================================================
+     MURO DE IDEAS
+===================================================== -->
+
 <section class="section wall-section">
 
     <div class="container">
 
+
         <div class="section-heading centered">
+
 
             <span class="eyebrow dark-eyebrow">
                 COMUNIDAD
             </span>
 
+
             <h2>
+
                 Un muro lleno
                 de ideas.
+
             </h2>
 
+
             <p>
+
                 Explora las propuestas, inspírate y descubre
                 qué están imaginando otros estudiantes.
+
             </p>
+
 
         </div>
 
 
+
         <div class="wall-card">
+
 
             <div class="wall-preview">
 
+
                 <div class="wall-preview-top">
-                    <span>IDEAS DE ESTUDIANTES</span>
+
+                    <span>
+                        IDEAS DE ESTUDIANTES
+                    </span>
+
                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
+
                 </div>
 
+
+
                 <div class="wall-notes">
+
 
                     <div class="wall-note note-one">
                         Más espacios verdes
                     </div>
 
+
                     <div class="wall-note note-two">
                         Mejorar la biblioteca
                     </div>
+
 
                     <div class="wall-note note-three">
                         Recreos activos
                     </div>
 
+
                     <div class="wall-note note-four">
                         Campaña ecológica
                     </div>
+
 
                 </div>
 
             </div>
 
 
+
             <div class="wall-copy">
 
-                <span class="wall-number">03</span>
+
+                <span class="wall-number">
+                    03
+                </span>
+
 
                 <h3>
+
                     La participación
                     también se comparte.
+
                 </h3>
 
+
                 <p>
+
                     Conoce otras propuestas y descubre
                     nuevas formas de aportar.
+
                 </p>
+
 
                 <button
                     class="btn btn-primary"
                     data-external="padlet"
                     type="button"
                 >
+
                     VER EL MURO
+
                     <i class="fa-solid fa-arrow-right"></i>
+
                 </button>
+
 
             </div>
 
@@ -625,9 +1050,15 @@
 </section>
 
 
+
+<!-- =====================================================
+     IDEAS
+===================================================== -->
+
 <section class="section ideas-section">
 
     <div class="container">
+
 
         <div class="section-heading">
 
@@ -635,320 +1066,99 @@
                 IDEAS
             </span>
 
+
             <h2>
+
                 Algunas ideas
                 ya están avanzando.
+
             </h2>
 
+
             <p>
+
                 Estas propuestas son datos de demostración
                 para mostrar cómo podría funcionar la plataforma.
+
             </p>
 
         </div>
 
 
+
         <div class="ideas-grid">
+
 
             {% for idea in data.demoIdeas %}
 
+
             <article class="idea-card">
 
+
                 <div class="idea-top">
+
                     <span class="category-badge">
                         {{ idea.category }}
                     </span>
 
+
                     <span class="demo-badge">
                         DEMO
                     </span>
+
                 </div>
+
 
                 <h3>
                     {{ idea.title }}
                 </h3>
 
+
                 <p>
                     {{ idea.description }}
                 </p>
 
+
                 <div class="idea-bottom">
-                    <span>
-                        <i class="fa-solid fa-user"></i>
-                        {{ idea.author }}
-                    </span>
+
 
                     <span>
-                        <i class="fa-solid fa-heart"></i>
-                        {{ idea.supports }}
+
+                        <i class="fa-solid fa-user"></i>
+
+                        {{ idea.author }}
+
                     </span>
+
+
+                    <span>
+
+                        <i class="fa-solid fa-heart"></i>
+
+                        {{ idea.supports }}
+
+                    </span>
+
+
                 </div>
+
 
                 <button
                     class="idea-support-button"
                     type="button"
                     data-support
                 >
+
                     APOYAR IDEA
+
                 </button>
+
 
             </article>
 
-            {% endfor %}
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="section process-section section-soft">
-
-    <div class="container">
-
-        <div class="section-heading centered">
-
-            <span class="eyebrow dark-eyebrow">
-                DEL TALENTO AL CAMBIO
-            </span>
-
-            <h2>
-                Así funciona.
-            </h2>
-
-        </div>
-
-
-        <div class="process-flow">
-
-            <div class="process-item">
-                <span>01</span>
-                <strong>DESCUBRIR</strong>
-            </div>
-
-            <div class="process-arrow">→</div>
-
-            <div class="process-item">
-                <span>02</span>
-                <strong>PROPONER</strong>
-            </div>
-
-            <div class="process-arrow">→</div>
-
-            <div class="process-item">
-                <span>03</span>
-                <strong>APOYAR</strong>
-            </div>
-
-            <div class="process-arrow">→</div>
-
-            <div class="process-item">
-                <span>04</span>
-                <strong>ACTUAR</strong>
-            </div>
-
-            <div class="process-arrow">→</div>
-
-            <div class="process-item active-process">
-                <span>05</span>
-                <strong>TRANSFORMAR</strong>
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="section missions-section" id="misiones">
-
-    <div class="container">
-
-        <div class="section-heading centered light-heading">
-
-            <span class="eyebrow light-eyebrow">
-                ACCIÓN
-            </span>
-
-            <h2>
-                Misiones que dejan huella.
-            </h2>
-
-            <p>
-                Las mejores propuestas pueden convertirse
-                en acciones concretas para nuestra comunidad.
-            </p>
-
-        </div>
-
-
-        <div class="missions-grid">
-
-            {% for mission in data.demoMissions %}
-
-            <article class="mission-card">
-
-                <div class="mission-header">
-
-                    <span class="mission-status">
-                        {{ mission.status }}
-                    </span>
-
-                    <span class="mission-number">
-                        {{ "%02d"|format(loop.index) }}
-                    </span>
-
-                </div>
-
-                <h3>
-                    {{ mission.title }}
-                </h3>
-
-                <p>
-                    {{ mission.description }}
-                </p>
-
-                <div class="mission-meta">
-
-                    <div>
-                        <small>META</small>
-                        <strong>{{ mission.goal }}</strong>
-                    </div>
-
-                    <div>
-                        <small>EQUIPO</small>
-                        <strong>{{ mission.team }}</strong>
-                    </div>
-
-                </div>
-
-                <button
-                    class="mission-button"
-                    type="button"
-                    data-mission-id="{{ mission.id }}"
-                >
-                    VER MISIÓN
-                    <i class="fa-solid fa-arrow-right"></i>
-                </button>
-
-            </article>
 
             {% endfor %}
 
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="section participation-section" id="participa">
-
-    <div class="container">
-
-        <div class="section-heading centered">
-
-            <span class="eyebrow dark-eyebrow">
-                TU TURNO
-            </span>
-
-            <h2>
-                ¿Cómo quieres participar?
-            </h2>
-
-            <p>
-                Elige una forma de comenzar.
-            </p>
-
-        </div>
-
-
-        <div class="participation-grid">
-
-            <button
-                class="participation-card"
-                data-external="talentos"
-                type="button"
-            >
-                <span>01</span>
-
-                <strong>
-                    Descubrir mi talento
-                </strong>
-
-                <small>
-                    Encuentra cómo puedes aportar.
-                </small>
-            </button>
-
-
-            <button
-                class="participation-card"
-                data-external="propuestas"
-                type="button"
-            >
-                <span>02</span>
-
-                <strong>
-                    Proponer una idea
-                </strong>
-
-                <small>
-                    Cuéntanos qué cambiarías.
-                </small>
-            </button>
-
-
-            <button
-                class="participation-card"
-                data-external="participacion"
-                type="button"
-            >
-                <span>03</span>
-
-                <strong>
-                    Unirme a una misión
-                </strong>
-
-                <small>
-                    Pasa de la idea a la acción.
-                </small>
-            </button>
-
-
-            <button
-                class="participation-card"
-                data-external="padlet"
-                type="button"
-            >
-                <span>04</span>
-
-                <strong>
-                    Ver ideas
-                </strong>
-
-                <small>
-                    Inspírate con otras propuestas.
-                </small>
-            </button>
-
-
-            <a
-                href="#impacto"
-                class="participation-card participation-special"
-            >
-                <span>05</span>
-
-                <strong>
-                    Ver el impacto
-                </strong>
-
-                <small>
-                    Descubre qué estamos logrando.
-                </small>
-            </a>
 
         </div>
 
@@ -957,148 +1167,289 @@
 </section>
 
 
-<section class="section impact-section" id="impacto">
+
+<!-- =====================================================
+     IMPACTO
+===================================================== -->
+
+<section
+    class="section impact-section"
+    id="impacto"
+>
 
     <div class="container">
+
 
         <div class="section-heading">
+
 
             <span class="eyebrow dark-eyebrow">
                 IMPACTO
             </span>
 
+
             <h2>
+
                 Cada participación
                 suma.
+
             </h2>
 
+
             <p>
+
                 Una idea puede parecer pequeña, pero cuando
                 muchas personas participan puede producir
                 un cambio enorme.
+
             </p>
+
 
         </div>
 
 
+
         <div class="impact-photo-card">
+
 
             <img
                 src="/static/images/impacto.jpg"
                 alt="Impacto de las acciones"
             >
 
+
             <div class="impact-photo-overlay"></div>
 
+
             <div class="impact-photo-content">
-                <span>CAMBIAR</span>
+
+                <span>
+                    CAMBIAR
+                </span>
+
                 <strong>
+
                     EMPIEZA
                     PARTICIPANDO.
+
                 </strong>
+
             </div>
 
+
         </div>
+
 
 
         <div class="impact-stats-grid">
 
-            <div class="impact-stat">
-                <strong>327</strong>
-                <span>PARTICIPANTES</span>
-            </div>
 
             <div class="impact-stat">
-                <strong>86</strong>
-                <span>PROPUESTAS</span>
+
+                <strong>
+                    327
+                </strong>
+
+                <span>
+                    PARTICIPANTES
+                </span>
+
             </div>
 
-            <div class="impact-stat">
-                <strong>18</strong>
-                <span>SELECCIONADAS</span>
-            </div>
 
             <div class="impact-stat">
-                <strong>9</strong>
-                <span>MISIONES</span>
+
+                <strong>
+                    86
+                </strong>
+
+                <span>
+                    PROPUESTAS
+                </span>
+
             </div>
 
-            <div class="impact-stat">
-                <strong>420</strong>
-                <span>BENEFICIADOS</span>
-            </div>
 
             <div class="impact-stat">
-                <strong>6</strong>
-                <span>ESPACIOS</span>
+
+                <strong>
+                    18
+                </strong>
+
+                <span>
+                    SELECCIONADAS
+                </span>
+
             </div>
+
+
+            <div class="impact-stat">
+
+                <strong>
+                    9
+                </strong>
+
+                <span>
+                    ACCIONES
+                </span>
+
+            </div>
+
+
+            <div class="impact-stat">
+
+                <strong>
+                    420
+                </strong>
+
+                <span>
+                    BENEFICIADOS
+                </span>
+
+            </div>
+
+
+            <div class="impact-stat">
+
+                <strong>
+                    6
+                </strong>
+
+                <span>
+                    ESPACIOS
+                </span>
+
+            </div>
+
 
         </div>
 
 
+
         <div class="charts-grid">
+
 
             <div class="chart-card">
 
+
                 <div class="chart-title">
-                    <span>PROPUESTAS POR CATEGORÍA</span>
+
+                    <span>
+                        PROPUESTAS POR CATEGORÍA
+                    </span>
+
                     <i class="fa-solid fa-chart-column"></i>
+
                 </div>
+
+
 
                 <div class="bar-chart">
 
+
                     {% for category, value in data.demoImpact.proposalsByCategory.items() %}
+
 
                     <div class="bar-row">
 
+
                         <div class="bar-label">
-                            <span>{{ category }}</span>
-                            <strong>{{ value }}</strong>
+
+                            <span>
+                                {{ category }}
+                            </span>
+
+                            <strong>
+                                {{ value }}
+                            </strong>
+
                         </div>
 
+
                         <div class="bar-track">
+
                             <div
                                 class="bar-fill"
                                 style="width: {{ value }}%;"
                             ></div>
+
                         </div>
+
 
                     </div>
 
+
                     {% endfor %}
+
 
                 </div>
 
+
             </div>
+
 
 
             <div class="chart-card">
 
+
                 <div class="chart-title">
-                    <span>DEL PROBLEMA AL CAMBIO</span>
+
+                    <span>
+                        DEL PROBLEMA AL CAMBIO
+                    </span>
+
                     <i class="fa-solid fa-filter-circle-dollar"></i>
+
                 </div>
+
+
 
                 <div class="funnel">
 
+
                     <div class="funnel-step funnel-one">
-                        <span>Participaciones</span>
-                        <strong>327</strong>
+
+                        <span>
+                            Participaciones
+                        </span>
+
+                        <strong>
+                            327
+                        </strong>
+
                     </div>
+
 
                     <div class="funnel-step funnel-two">
-                        <span>Propuestas</span>
-                        <strong>86</strong>
+
+                        <span>
+                            Propuestas
+                        </span>
+
+                        <strong>
+                            86
+                        </strong>
+
                     </div>
 
+
                     <div class="funnel-step funnel-three">
-                        <span>Misiones</span>
-                        <strong>9</strong>
+
+                        <span>
+                            Acciones
+                        </span>
+
+                        <strong>
+                            9
+                        </strong>
+
                     </div>
+
 
                 </div>
 
             </div>
+
 
         </div>
 
@@ -1107,83 +1458,207 @@
 </section>
 
 
-<section class="section map-section">
+
+<!-- =====================================================
+     MAPA
+===================================================== -->
+
+<section
+    class="section map-section"
+    id="mapa"
+>
 
     <div class="container">
 
+
         <div class="section-heading centered">
+
 
             <span class="eyebrow dark-eyebrow">
                 EL COLEGIO
             </span>
 
+
             <h2>
                 ¿Dónde podemos transformar?
             </h2>
 
+
             <p>
+
                 Explora algunos espacios donde podrían
                 desarrollarse futuras acciones.
+
             </p>
+
 
         </div>
 
 
+
         <div class="school-map">
+
+
+            <!-- PATIO 1 -->
+
+            <button
+                class="map-space map-yard"
+                data-map-space="Patio 1"
+                type="button"
+            >
+
+                <img
+                    src="/static/images/patio1.jpg"
+                    alt="Patio 1"
+                >
+
+                <div class="map-space-content">
+
+                    <i class="fa-solid fa-people-group"></i>
+
+                    <span>
+                        Patio 1
+                    </span>
+
+                </div>
+
+            </button>
+
+
+
+            <!-- PATIO 2 -->
+
+            <button
+                class="map-space map-yard map-yard-2"
+                data-map-space="Patio 2"
+                type="button"
+            >
+
+                <img
+                    src="/static/images/patio2.jpg"
+                    alt="Patio 2"
+                >
+
+                <div class="map-space-content">
+
+                    <i class="fa-solid fa-people-group"></i>
+
+                    <span>
+                        Patio 2
+                    </span>
+
+                </div>
+
+            </button>
+
+
+
+            <!-- BIBLIOTECA -->
 
             <button
                 class="map-space map-library"
                 data-map-space="Biblioteca"
                 type="button"
             >
-                <i class="fa-solid fa-book"></i>
-                Biblioteca
+
+                <img
+                    src="/static/images/biblioteca.jpg"
+                    alt="Biblioteca"
+                >
+
+                <div class="map-space-content">
+
+                    <i class="fa-solid fa-book"></i>
+
+                    <span>
+                        Biblioteca
+                    </span>
+
+                </div>
+
             </button>
+
+
+
+            <!-- ÁREAS VERDES 1 -->
 
             <button
                 class="map-space map-green"
-                data-map-space="Área verde"
+                data-map-space="áreas verdes 1"
                 type="button"
             >
-                <i class="fa-solid fa-leaf"></i>
-                Área verde
+
+                <img
+                    src="/static/images/areasverdes1.jpg"
+                    alt="Áreas verdes 1"
+                >
+
+                <div class="map-space-content">
+
+                    <i class="fa-solid fa-leaf"></i>
+
+                    <span>
+                        Áreas verdes 1
+                    </span>
+
+                </div>
+
             </button>
 
+
+
+            <!-- ÁREAS VERDES 2 -->
+
             <button
-                class="map-space map-yard"
-                data-map-space="Patio"
+                class="map-space map-green map-green-2"
+                data-map-space="áreas verdes 2"
                 type="button"
             >
-                <i class="fa-solid fa-people-group"></i>
-                Patio
+
+                <img
+                    src="/static/images/areasverdes2.jpg"
+                    alt="Áreas verdes 2"
+                >
+
+                <div class="map-space-content">
+
+                    <i class="fa-solid fa-leaf"></i>
+
+                    <span>
+                        Áreas verdes 2
+                    </span>
+
+                </div>
+
             </button>
+
+
+
+            <!-- PISCINA -->
 
             <button
                 class="map-space map-sport"
-                data-map-space="Zona deportiva"
+                data-map-space="piscina"
                 type="button"
             >
-                <i class="fa-solid fa-volleyball"></i>
-                Zona deportiva
+
+                <img
+                    src="/static/images/piscina.jpg"
+                    alt="Piscina"
+                >
+
+                <div class="map-space-content">
+
+                    <i class="fa-solid fa-person-swimming"></i>
+
+                    <span>
+                        Piscina
+                    </span>
+
+                </div>
+
             </button>
 
-            <button
-                class="map-space map-community"
-                data-map-space="Espacio comunitario"
-                type="button"
-            >
-                <i class="fa-solid fa-handshake"></i>
-                Espacio comunitario
-            </button>
-
-            <button
-                class="map-space map-tech"
-                data-map-space="Zona tecnológica"
-                type="button"
-            >
-                <i class="fa-solid fa-laptop"></i>
-                Zona tecnológica
-            </button>
 
         </div>
 
@@ -1191,67 +1666,92 @@
 
 </section>
 
+
+
+<!-- =====================================================
+     ANTES / DURANTE / DESPUÉS
+===================================================== -->
 
 <section class="section before-after-section">
 
     <div class="container">
 
+
         <div class="section-heading centered light-heading">
+
 
             <span class="eyebrow light-eyebrow">
                 TRANSFORMACIÓN
             </span>
 
+
             <h2>
+
                 Antes.
                 Durante.
                 Después.
+
             </h2>
 
+
             <p>
+
                 Porque participar no termina cuando se presenta
                 una idea. Empieza cuando actuamos.
+
             </p>
+
 
         </div>
 
 
+
         <div class="before-after-grid">
 
+
             <div class="image-placeholder-card">
+
                 <img
                     src="/static/images/misiones.jpg"
-                    alt="Antes de una misión"
+                    alt="Antes de una acción"
                 >
 
                 <div class="image-label">
                     ANTES
                 </div>
+
             </div>
 
 
+
             <div class="image-placeholder-card">
+
                 <img
                     src="/static/images/colegio1.jpg"
-                    alt="Durante una misión"
+                    alt="Durante una acción"
                 >
 
                 <div class="image-label">
                     DURANTE
                 </div>
+
             </div>
 
 
+
             <div class="image-placeholder-card">
+
                 <img
                     src="/static/images/impacto.jpg"
-                    alt="Después de una misión"
+                    alt="Después de una acción"
                 >
 
                 <div class="image-label">
                     DESPUÉS
                 </div>
+
             </div>
+
 
         </div>
 
@@ -1260,45 +1760,71 @@
 </section>
 
 
+
+<!-- =====================================================
+     TESTIMONIOS
+===================================================== -->
+
 <section class="section testimonials-section">
 
     <div class="container">
 
+
         <div class="section-heading centered">
+
 
             <span class="eyebrow dark-eyebrow">
                 VOCES
             </span>
 
+
             <h2>
+
                 Cuando participamos,
                 algo cambia.
+
             </h2>
+
 
         </div>
 
 
+
         <div class="testimonials-grid">
+
 
             {% for testimonial in data.demoTestimonials %}
 
+
             <article class="testimonial-card">
 
+
                 <div class="quote-icon">
+
                     <i class="fa-solid fa-quote-left"></i>
+
                 </div>
 
+
                 <p>
+
                     “{{ testimonial.text }}”
+
                 </p>
+
 
                 <div class="testimonial-person">
 
+
                     <div class="testimonial-avatar">
+
                         {{ testimonial.name[0] }}
+
                     </div>
 
+
                     <div>
+
                         <strong>
                             {{ testimonial.name }}
                         </strong>
@@ -1306,13 +1832,18 @@
                         <small>
                             {{ testimonial.role }}
                         </small>
+
                     </div>
+
 
                 </div>
 
+
             </article>
 
+
             {% endfor %}
+
 
         </div>
 
@@ -1321,52 +1852,77 @@
 </section>
 
 
-<section class="section participants-section section-soft">
+
+<!-- =====================================================
+     PARTICIPANTES
+===================================================== -->
+
+<section
+    class="section participants-section section-soft"
+>
 
     <div class="container">
 
+
         <div class="section-heading">
+
 
             <span class="eyebrow dark-eyebrow">
                 COMUNIDAD
             </span>
 
+
             <h2>
                 Personas que ya decidieron participar.
             </h2>
 
+
         </div>
+
 
 
         <div class="participants-grid">
 
+
             {% for participant in data.demoParticipants %}
+
 
             <article class="participant-card">
 
+
                 <div class="participant-avatar">
+
                     {{ participant.initials }}
+
                 </div>
 
+
                 <div>
+
 
                     <strong>
                         {{ participant.name }}
                     </strong>
 
+
                     <span>
                         {{ participant.role }}
                     </span>
+
 
                     <small>
                         {{ participant.action }}
                     </small>
 
+
                 </div>
+
 
             </article>
 
+
             {% endfor %}
+
 
         </div>
 
@@ -1375,185 +1931,309 @@
 </section>
 
 
+
+<!-- =====================================================
+     CTA FINAL
+===================================================== -->
+
 <section class="final-cta">
 
     <div class="container final-cta-content">
+
 
         <span class="eyebrow light-eyebrow">
             AHORA TE TOCA A TI
         </span>
 
+
         <h2>
+
             Tu talento
             puede empezar
             el cambio.
+
         </h2>
 
+
         <p>
+
             Una idea. Una persona. Una acción.
             Así comienza una transformación.
+
         </p>
 
+
         <div class="final-actions">
+
 
             <button
                 class="btn btn-light"
                 data-external="talentos"
                 type="button"
             >
+
                 DESCUBRIR MI TALENTO
+
             </button>
+
 
             <button
                 class="btn btn-outline"
                 data-external="propuestas"
                 type="button"
             >
+
                 PROPONER UNA IDEA
+
             </button>
 
+
         </div>
+
 
     </div>
 
 </section>
 
 
+
+<!-- =====================================================
+     QR
+===================================================== -->
+
 <section class="section qr-section">
 
     <div class="container qr-container">
 
+
         <div>
+
 
             <span class="eyebrow dark-eyebrow">
                 PARTICIPA DESDE CUALQUIER LUGAR
             </span>
 
+
             <h2>
                 Escanea y empieza.
             </h2>
 
+
             <p>
+
                 Puedes usar este espacio para colocar el
                 código QR oficial de la plataforma.
+
             </p>
+
 
         </div>
 
 
+
         <div class="qr-box">
 
+
             {% if config.QR_IMAGE_PATH %}
+
 
                 <img
                     src="{{ config.QR_IMAGE_PATH }}"
                     alt="Código QR"
                 >
 
+
             {% else %}
 
+
                 <div class="qr-placeholder">
+
+
                     <i class="fa-solid fa-qrcode"></i>
+
+
                     <span>
-                        AQUÍ IRÁ<br>
+
+                        AQUÍ IRÁ
+                        <br>
                         TU QR
+
                     </span>
+
+
                 </div>
+
 
             {% endif %}
 
+
         </div>
+
 
     </div>
 
 </section>
 
+
 </main>
 
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
 
 <footer class="site-footer">
 
     <div class="container footer-grid">
 
+
         <div>
 
-            <a href="#inicio" class="brand footer-brand">
+
+            <a
+                href="#inicio"
+                class="brand footer-brand"
+            >
+
 
                 <span class="brand-logo">
+
                     <img
                         src="/static/images/logo.png"
                         alt="Logo"
                     >
+
                 </span>
 
+
                 <span class="brand-text">
-                    <strong>TU TALENTO</strong>
-                    <small>PUEDE CAMBIAR EL COLEGIO</small>
+
+                    <strong>
+                        TU TALENTO
+                    </strong>
+
+                    <small>
+                        PUEDE CAMBIAR EL COLEGIO
+                    </small>
+
                 </span>
+
 
             </a>
 
+
             <p class="footer-description">
+
                 Una experiencia para descubrir talentos,
                 escuchar ideas y convertir la participación
                 estudiantil en acción.
+
             </p>
 
+
         </div>
+
 
 
         <div class="footer-links">
 
-            <h3>NAVEGACIÓN</h3>
 
-            <a href="#inicio">Inicio</a>
-            <a href="#talentos">Talentos</a>
-            <a href="#propuestas">Propuestas</a>
-            <a href="#misiones">Misiones</a>
-            <a href="#impacto">Impacto</a>
+            <h3>
+                NAVEGACIÓN
+            </h3>
+
+
+            <a href="#inicio">
+                Inicio
+            </a>
+
+
+            <a href="#talentos">
+                Talentos
+            </a>
+
+
+            <a href="#propuestas">
+                Propuestas
+            </a>
+
+
+            <a href="#impacto">
+                Impacto
+            </a>
+
+
+            <a href="#mapa">
+                Mapa
+            </a>
+
 
         </div>
 
 
+
         <div class="footer-info">
 
-            <h3>PROYECTO</h3>
+
+            <h3>
+                PROYECTO
+            </h3>
+
 
             <p>
                 {{ config.NOMBRE_COLEGIO }}
             </p>
 
+
             <p>
                 {{ config.ANIO }}
             </p>
+
 
             <p>
                 Proyecto de participación estudiantil
             </p>
 
+
         </div>
+
 
     </div>
 
 
+
     <div class="footer-bottom">
+
 
         <div class="container">
 
+
             <span>
-                © {{ config.ANIO }} Tu Talento Puede Cambiar el Colegio
+
+                © {{ config.ANIO }}
+                Tu Talento Puede Cambiar el Colegio
+
             </span>
+
 
             <span>
                 Hecho para participar.
             </span>
 
+
         </div>
+
 
     </div>
 
 </footer>
 
+
+
+<!-- =====================================================
+     MODAL
+===================================================== -->
 
 <div
     class="modal-overlay"
@@ -1561,7 +2241,13 @@
     aria-hidden="true"
 >
 
-    <div class="modal" role="dialog" aria-modal="true">
+
+    <div
+        class="modal"
+        role="dialog"
+        aria-modal="true"
+    >
+
 
         <button
             class="modal-close"
@@ -1572,6 +2258,7 @@
             ×
         </button>
 
+
         <span
             class="eyebrow dark-eyebrow"
             id="modalEyebrow"
@@ -1579,27 +2266,35 @@
             INFORMACIÓN
         </span>
 
+
         <h3 id="modalTitle">
             Título
         </h3>
+
 
         <p id="modalDescription">
             Descripción
         </p>
 
+
         <div id="modalContent"></div>
+
 
     </div>
 
 </div>
 
 
-<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script
+    src="{{ url_for('static', filename='js/main.js') }}"
+></script>
+
 
 </body>
+
 </html>
-
-
-
-
-

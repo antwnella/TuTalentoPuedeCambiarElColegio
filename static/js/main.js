@@ -1,984 +1,301 @@
+/* =========================================================
+   🗺️ MAPA DE IMPACTO + 🌐 COMUNIDAD
+========================================================= */
+
 document.addEventListener("DOMContentLoaded", () => {
 
-    const config = window.PROJECT_CONFIG || {};
-    const missions = window.MISSIONS_DATA || [];
-
     /* =====================================================
-       MENÚ MÓVIL
+       URL DEL MAPA DE IMPACTO
+
+       Cuando tengas la URL definitiva, me la das y
+       la colocamos aquí sin que tengas que buscar nada.
     ===================================================== */
 
-    const menuToggle = document.getElementById("menuToggle");
-    const mainNav = document.getElementById("mainNav");
-
-    if (menuToggle && mainNav) {
-
-        menuToggle.setAttribute("aria-expanded", "false");
-
-        menuToggle.addEventListener("click", () => {
-
-            const isOpen = mainNav.classList.toggle("active");
-
-            menuToggle.setAttribute(
-                "aria-expanded",
-                isOpen ? "true" : "false"
-            );
-
-        });
-
-        mainNav.querySelectorAll("a").forEach((link) => {
-
-            link.addEventListener("click", () => {
-
-                mainNav.classList.remove("active");
-
-                menuToggle.setAttribute(
-                    "aria-expanded",
-                    "false"
-                );
-
-            });
-
-        });
-    }
+    const IMPACT_MAP_URL = "";
 
 
     /* =====================================================
-       CONTADORES ANIMADOS
+       RECUPERAR MAPA
     ===================================================== */
 
-    const counters = document.querySelectorAll(".counter");
+    const mapSection =
+        document.querySelector(".map-section");
 
-    function animateCounter(element) {
 
-        const target = Number(element.dataset.target);
+    if (mapSection) {
 
-        if (!Number.isFinite(target)) {
-            return;
-        }
+        mapSection.id = "mapa";
 
-        const duration = 1300;
-        const startTime = performance.now();
+        mapSection.classList.remove(
+            "hidden"
+        );
 
-        function update(currentTime) {
+        mapSection.dataset.hiddenPanel =
+            "false";
 
-            const elapsed = currentTime - startTime;
 
-            const progress = Math.min(
-                elapsed / duration,
-                1
+        mapSection.classList.add(
+            "impact-map-panel"
+        );
+
+
+        /* Texto explicativo */
+
+        const heading =
+            mapSection.querySelector(
+                ".section-heading"
             );
-
-            const easedProgress =
-                1 - Math.pow(1 - progress, 3);
-
-            const currentValue =
-                Math.round(target * easedProgress);
-
-            element.textContent =
-                currentValue.toLocaleString("es-PE");
-
-            if (progress < 1) {
-                requestAnimationFrame(update);
-            }
-
-        }
-
-        requestAnimationFrame(update);
-    }
-
-
-    if ("IntersectionObserver" in window) {
-
-        const counterObserver =
-            new IntersectionObserver(
-                (entries, observer) => {
-
-                    entries.forEach((entry) => {
-
-                        if (entry.isIntersecting) {
-
-                            animateCounter(entry.target);
-
-                            observer.unobserve(
-                                entry.target
-                            );
-                        }
-
-                    });
-
-                },
-                {
-                    threshold: 0.5
-                }
-            );
-
-        counters.forEach((counter) => {
-            counterObserver.observe(counter);
-        });
-
-    } else {
-
-        counters.forEach((counter) => {
-            animateCounter(counter);
-        });
-
-    }
-
-
-    /* =====================================================
-       MODAL
-    ===================================================== */
-
-    const modalOverlay =
-        document.getElementById("modalOverlay");
-
-    const modalClose =
-        document.getElementById("modalClose");
-
-
-    function escapeHTML(value) {
-
-        return String(value ?? "")
-            .replaceAll("&", "&amp;")
-            .replaceAll("<", "&lt;")
-            .replaceAll(">", "&gt;")
-            .replaceAll('"', "&quot;")
-            .replaceAll("'", "&#039;");
-    }
-
-
-    function showInfoModal(title, message) {
-
-        const modalContent =
-            document.getElementById("modalContent");
-
-        const modalTitle =
-            document.getElementById("modalTitle");
-
-        const modalDescription =
-            document.getElementById("modalDescription");
-
-        const modalEyebrow =
-            document.getElementById("modalEyebrow");
 
 
         if (
-            !modalOverlay ||
-            !modalContent ||
-            !modalTitle ||
-            !modalDescription
+            heading &&
+            !heading.querySelector(
+                ".impact-map-intro"
+            )
         ) {
 
-            alert(
-                `${title}\n\n${message}`
-            );
-
-            return;
-        }
-
-
-        if (modalEyebrow) {
-            modalEyebrow.textContent =
-                "INFORMACIÓN";
-        }
-
-
-        modalTitle.textContent = title;
-
-        modalDescription.textContent =
-            message;
-
-        modalContent.innerHTML = "";
-
-
-        modalOverlay.classList.add("active");
-
-        modalOverlay.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        document.body.style.overflow = "hidden";
-    }
-
-
-    function closeModal() {
-
-        if (!modalOverlay) {
-            return;
-        }
-
-        modalOverlay.classList.remove("active");
-
-        modalOverlay.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-        document.body.style.overflow = "";
-    }
-
-
-    if (modalClose) {
-
-        modalClose.addEventListener(
-            "click",
-            closeModal
-        );
-
-    }
-
-
-    if (modalOverlay) {
-
-        modalOverlay.addEventListener(
-            "click",
-            (event) => {
-
-                if (
-                    event.target ===
-                    modalOverlay
-                ) {
-                    closeModal();
-                }
-
-            }
-        );
-
-    }
-
-
-    document.addEventListener(
-        "keydown",
-        (event) => {
-
-            if (
-                event.key === "Escape" &&
-                modalOverlay?.classList.contains(
-                    "active"
-                )
-            ) {
-                closeModal();
-            }
-
-        }
-    );
-
-
-    /* =====================================================
-       GOOGLE FORMS / ENLACES EXTERNOS
-    ===================================================== */
-
-    function openExternalLink(
-        url,
-        title
-    ) {
-
-        if (
-            typeof url !== "string" ||
-            !url.trim()
-        ) {
-
-            showInfoModal(
-                "ENLACE PENDIENTE",
-                `El enlace de ${title} todavía no está configurado en config.py.`
-            );
-
-            return;
-        }
-
-
-        try {
-
-            const parsedUrl =
-                new URL(url.trim());
-
-
-            if (
-                parsedUrl.protocol !== "http:" &&
-                parsedUrl.protocol !== "https:"
-            ) {
-
-                showInfoModal(
-                    "ENLACE NO VÁLIDO",
-                    "El enlace configurado no utiliza HTTP o HTTPS."
+            const intro =
+                document.createElement(
+                    "p"
                 );
 
-                return;
-            }
+
+            intro.className =
+                "impact-map-intro";
 
 
-            window.location.href =
-                parsedUrl.href;
+            intro.textContent =
+                "Explora espacios concretos donde una idea puede convertirse en una acción que mejore nuestra comunidad educativa.";
 
-        } catch (error) {
 
-            showInfoModal(
-                "ENLACE NO VÁLIDO",
-                "Revisa que el enlace configurado esté completo y sea válido."
+            heading.appendChild(
+                intro
             );
 
         }
 
-    }
+
+        /* Botón del mapa */
+
+        if (
+            !mapSection.querySelector(
+                ".impact-map-url-button"
+            )
+        ) {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
 
 
-    const externalButtons =
-        document.querySelectorAll(
-            "[data-external]"
-        );
+            button.type = "button";
+
+            button.className =
+                "btn btn-primary impact-map-url-button";
 
 
-    externalButtons.forEach((button) => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                const type =
-                    button.dataset.external;
+            button.innerHTML = `
+                VER MAPA DE IMPACTO
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            `;
 
 
-                if (type === "talentos") {
-
-                    openExternalLink(
-                        config.GOOGLE_FORM_TALENTOS_URL,
-                        "DESCUBRIR MI TALENTO"
-                    );
-
-                    return;
-                }
-
-
-                if (type === "propuestas") {
-
-                    openExternalLink(
-                        config.GOOGLE_FORM_PROPUESTAS_URL,
-                        "PROPONER UNA IDEA"
-                    );
-
-                    return;
-                }
-
-
-                if (type === "participacion") {
-
-                    openExternalLink(
-                        config.GOOGLE_FORM_PARTICIPACION_URL,
-                        "PARTICIPACIÓN"
-                    );
-
-                    return;
-                }
-
-
-                if (type === "padlet") {
-
-                    openExternalLink(
-                        config.PADLET_URL,
-                        "PADLET"
-                    );
-
-                    return;
-                }
-
-            }
-        );
-
-    });
-
-
-    /* =====================================================
-       APOYAR IDEAS
-    ===================================================== */
-
-    const supportButtons =
-        document.querySelectorAll(
-            "[data-support]"
-        );
-
-
-    supportButtons.forEach((button) => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                if (
-                    button.classList.contains(
-                        "supported"
-                    )
-                ) {
-
-                    showInfoModal(
-                        "YA APOYASTE ESTA IDEA",
-                        "Esta interacción es solamente una demostración local."
-                    );
-
-                    return;
-                }
-
-
-                const card =
-                    button.closest(
-                        ".idea-card"
-                    );
-
-
-                if (!card) {
-                    return;
-                }
-
-
-                let countElement =
-                    card.querySelector(
-                        ".support-count"
-                    );
-
-
-                if (!countElement) {
-
-                    const bottom =
-                        card.querySelector(
-                            ".idea-bottom"
-                        );
-
-                    if (bottom) {
-
-                        const supportSpan =
-                            document.createElement(
-                                "span"
-                            );
-
-                        supportSpan.className =
-                            "support-count";
-
-                        supportSpan.textContent =
-                            "1";
-
-                        bottom.appendChild(
-                            supportSpan
-                        );
-
-                        countElement =
-                            supportSpan;
-                    }
-
-                }
-
-
-                if (countElement) {
-
-                    const currentCount =
-                        Number.parseInt(
-                            countElement.textContent,
-                            10
-                        );
+            button.addEventListener(
+                "click",
+                () => {
 
                     if (
-                        Number.isFinite(
-                            currentCount
-                        )
+                        !IMPACT_MAP_URL
                     ) {
 
-                        countElement.textContent =
-                            currentCount + 1;
+                        showInfoModal(
+                            "MAPA DE IMPACTO",
+                            "Aquí irá el enlace del mapa de impacto. Cuando tengas la URL, podemos colocarla directamente en la página."
+                        );
+
+                        return;
                     }
 
-                }
 
-
-                button.classList.add(
-                    "supported"
-                );
-
-                button.textContent =
-                    "IDEA APOYADA";
-
-
-                showInfoModal(
-                    "APOYO REGISTRADO",
-                    "Tu apoyo se registró únicamente como una interacción de demostración. No se guardó en una base real."
-                );
-
-            }
-        );
-
-    });
-
-
-    /* =====================================================
-       MISIONES
-    ===================================================== */
-
-    function findMissionById(id) {
-
-        return missions.find(
-            (mission) =>
-                String(mission.id) ===
-                String(id)
-        );
-
-    }
-
-
-    function createMissionModal(mission) {
-
-        if (!mission) {
-
-            showInfoModal(
-                "MISIÓN NO ENCONTRADA",
-                "No fue posible encontrar la información de esta misión."
-            );
-
-            return;
-        }
-
-
-        const modalContent =
-            document.getElementById(
-                "modalContent"
-            );
-
-        const modalTitle =
-            document.getElementById(
-                "modalTitle"
-            );
-
-        const modalDescription =
-            document.getElementById(
-                "modalDescription"
-            );
-
-        const modalEyebrow =
-            document.getElementById(
-                "modalEyebrow"
-            );
-
-
-        if (
-            !modalContent ||
-            !modalTitle ||
-            !modalDescription ||
-            !modalOverlay
-        ) {
-            return;
-        }
-
-
-        if (modalEyebrow) {
-
-            modalEyebrow.textContent =
-                `MISIÓN #${mission.number ?? ""}`;
-        }
-
-
-        modalTitle.textContent =
-            mission.title || "Misión";
-
-
-        modalDescription.textContent =
-            mission.objective ||
-            mission.description ||
-            "";
-
-
-        let html = "";
-
-
-        html += `
-            <div class="modal-detail-list">
-        `;
-
-
-        if (mission.problem) {
-
-            html += `
-                <div class="modal-detail-item">
-                    <small>PROBLEMA</small>
-                    <strong>
-                        ${escapeHTML(
-                            mission.problem
-                        )}
-                    </strong>
-                </div>
-            `;
-
-        }
-
-
-        if (mission.status) {
-
-            html += `
-                <div class="modal-detail-item">
-                    <small>ESTADO</small>
-                    <strong>
-                        ${escapeHTML(
-                            mission.status
-                        )}
-                    </strong>
-                </div>
-            `;
-
-        }
-
-
-        if (mission.participants) {
-
-            html += `
-                <div class="modal-detail-item">
-                    <small>PARTICIPANTES</small>
-                    <strong>
-                        ${escapeHTML(
-                            mission.participants
-                        )}
-                    </strong>
-                </div>
-            `;
-
-        }
-
-
-        if (mission.location) {
-
-            html += `
-                <div class="modal-detail-item">
-                    <small>LUGAR</small>
-                    <strong>
-                        ${escapeHTML(
-                            mission.location
-                        )}
-                    </strong>
-                </div>
-            `;
-
-        }
-
-
-        if (mission.date) {
-
-            html += `
-                <div class="modal-detail-item">
-                    <small>FECHA</small>
-                    <strong>
-                        ${escapeHTML(
-                            mission.date
-                        )}
-                    </strong>
-                </div>
-            `;
-
-        }
-
-
-        if (mission.result) {
-
-            html += `
-                <div class="modal-detail-item">
-                    <small>RESULTADO</small>
-                    <strong>
-                        ${escapeHTML(
-                            mission.result
-                        )}
-                    </strong>
-                </div>
-            `;
-
-        }
-
-
-        if (mission.goal) {
-
-            html += `
-                <div class="modal-detail-item">
-                    <small>META</small>
-                    <strong>
-                        ${escapeHTML(
-                            mission.goal
-                        )}
-                    </strong>
-                </div>
-            `;
-
-        }
-
-
-        if (mission.team) {
-
-            html += `
-                <div class="modal-detail-item">
-                    <small>EQUIPO</small>
-                    <strong>
-                        ${escapeHTML(
-                            mission.team
-                        )}
-                    </strong>
-                </div>
-            `;
-
-        }
-
-
-        html += `
-            </div>
-        `;
-
-
-        if (
-            Array.isArray(
-                mission.steps
-            ) &&
-            mission.steps.length
-        ) {
-
-            html += `
-                <div class="modal-steps">
-
-                    <span class="eyebrow dark-eyebrow">
-                        PASOS DE LA MISIÓN
-                    </span>
-            `;
-
-
-            mission.steps.forEach(
-                (step, index) => {
-
-                    html += `
-                        <div class="modal-step">
-                            <span>
-                                ${String(
-                                    index + 1
-                                ).padStart(2, "0")}
-                            </span>
-
-                            <div>
-                                ${escapeHTML(
-                                    step
-                                )}
-                            </div>
-                        </div>
-                    `;
-
-                }
-            );
-
-
-            html += `
-                </div>
-            `;
-
-        }
-
-
-        modalContent.innerHTML =
-            html;
-
-
-        modalOverlay.classList.add(
-            "active"
-        );
-
-        modalOverlay.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-        document.body.style.overflow =
-            "hidden";
-    }
-
-
-    const missionButtons =
-        document.querySelectorAll(
-            "[data-mission-id]"
-        );
-
-
-    missionButtons.forEach((button) => {
-
-        button.addEventListener(
-            "click",
-            () => {
-
-                const missionId =
-                    button.dataset.missionId;
-
-                const mission =
-                    findMissionById(
-                        missionId
+                    window.open(
+                        IMPACT_MAP_URL,
+                        "_blank",
+                        "noopener,noreferrer"
                     );
 
-                createMissionModal(
-                    mission
+                }
+            );
+
+
+            if (heading) {
+                heading.appendChild(
+                    button
                 );
-
             }
-        );
 
-    });
-
-
-    /* =====================================================
-       MAPA INTERACTIVO
-    ===================================================== */
-
-    const mapSpaces =
-        document.querySelectorAll(
-            ".map-space"
-        );
+        }
 
 
-    mapSpaces.forEach((space) => {
+        /* Reescribir ejemplos concretos */
 
-        space.addEventListener(
-            "click",
-            () => {
+        const mapExamples = {
+
+            "Biblioteca":
+                "Club de lectura, banco de libros y zona silenciosa de estudio.",
+
+            "Área verde":
+                "Huerto escolar, reciclaje y recuperación de áreas verdes.",
+
+            "Patio":
+                "Recreos activos, juegos cooperativos y actividades de convivencia.",
+
+            "Zona deportiva":
+                "Torneos intersalones, préstamo de implementos y actividades deportivas.",
+
+            "Espacio comunitario":
+                "Mural estudiantil, buzón de ideas y campañas de convivencia.",
+
+            "Zona tecnológica":
+                "Club de programación, proyectos digitales y laboratorio creativo."
+
+        };
+
+
+        mapSection
+            .querySelectorAll(
+                ".map-space"
+            )
+            .forEach((space) => {
 
                 const title =
                     space.textContent
                         .trim()
-                        .replace(/\s+/g, " ")
-                        .toUpperCase();
+                        .replace(
+                            /\s+/g,
+                            " "
+                        );
 
 
-                const descriptions = {
-
-                    "BIBLIOTECA":
-                        "Lugar que puede concentrar iniciativas relacionadas con lectura, aprendizaje y estudio.",
-
-                    "ÁREA VERDE":
-                        "Espacio donde podrían desarrollarse propuestas relacionadas con ambiente y sostenibilidad.",
-
-                    "PATIO":
-                        "Zona que puede convertirse en escenario para actividades de convivencia y participación.",
-
-                    "ZONA DEPORTIVA":
-                        "Espacio para iniciativas relacionadas con deporte, actividad física y trabajo en equipo.",
-
-                    "ESPACIO COMUNITARIO":
-                        "Lugar pensado para fortalecer la integración y convivencia entre estudiantes.",
-
-                    "ZONA TECNOLÓGICA":
-                        "Espacio asociado a propuestas de tecnología, creatividad e innovación."
-                };
+                const example =
+                    mapExamples[title];
 
 
-                const description =
-                    descriptions[title] ||
-                    "Este espacio forma parte de la visualización de impacto del proyecto.";
+                if (!example) {
+                    return;
+                }
 
 
-                showInfoModal(
-                    title,
-                    `${description} Esta información es de demostración.`
-                );
+                let exampleElement =
+                    space.querySelector(
+                        ".map-example"
+                    );
 
-            }
-        );
 
-    });
+                if (!exampleElement) {
+
+                    exampleElement =
+                        document.createElement(
+                            "span"
+                        );
+
+                    exampleElement.className =
+                        "map-example";
+
+                    space.appendChild(
+                        exampleElement
+                    );
+
+                }
+
+
+                exampleElement.textContent =
+                    example;
+
+            });
+
+    }
 
 
     /* =====================================================
-       ANIMACIONES AL HACER SCROLL
+       AGREGAR MAPA AL MENÚ
     ===================================================== */
 
-    const animatedElements =
-        document.querySelectorAll(
-            `
-            .feature-card,
-            .talent-card,
-            .idea-card,
-            .mission-card,
-            .testimonial-card,
-            .participant-card,
-            .impact-stat,
-            .chart-card,
-            .image-placeholder-card,
-            .hero-image-card,
-            .hero-floating-card,
-            .wall-card,
-            .large-photo-card,
-            .proposal-image-card,
-            .impact-photo-card
-            `
+    const nav =
+        document.querySelector(
+            ".main-nav"
         );
 
 
-    animatedElements.forEach(
-        (element, index) => {
+    if (
+        nav &&
+        !nav.querySelector(
+            '[href="#mapa"]'
+        )
+    ) {
 
-            element.style.opacity = "0";
-
-            element.style.transform =
-                "translateY(18px)";
-
-            element.style.transition =
-                `
-                opacity 0.65s ease,
-                transform 0.65s ease
-                `;
-
-            element.style.transitionDelay =
-                `${Math.min(index * 0.035, 0.25)}s`;
-        }
-    );
-
-
-    if ("IntersectionObserver" in window) {
-
-        const animationObserver =
-            new IntersectionObserver(
-                (entries, observer) => {
-
-                    entries.forEach(
-                        (entry) => {
-
-                            if (
-                                entry.isIntersecting
-                            ) {
-
-                                entry.target.style.opacity =
-                                    "1";
-
-                                entry.target.style.transform =
-                                    "translateY(0)";
-
-                                observer.unobserve(
-                                    entry.target
-                                );
-                            }
-
-                        }
-                    );
-
-                },
-                {
-                    threshold: 0.12
-                }
+        const mapLink =
+            document.createElement(
+                "a"
             );
 
 
-        animatedElements.forEach(
-            (element) => {
+        mapLink.href =
+            "#mapa";
 
-                animationObserver.observe(
-                    element
-                );
 
-            }
+        mapLink.textContent =
+            "Mapa";
+
+
+        nav.insertBefore(
+            mapLink,
+            nav.querySelector(
+                '[href="#impacto"]'
+            ) ||
+            nav.querySelector(
+                ".nav-highlight"
+            )
         );
 
-    } else {
 
-        animatedElements.forEach(
-            (element) => {
+        mapLink.addEventListener(
+            "click",
+            (event) => {
 
-                element.style.opacity =
-                    "1";
+                event.preventDefault();
 
-                element.style.transform =
-                    "translateY(0)";
+
+                const panels =
+                    document.querySelectorAll(
+                        "main > section"
+                    );
+
+
+                panels.forEach(
+                    (section) => {
+
+                        section.classList.remove(
+                            "panel-active"
+                        );
+
+                    }
+                );
+
+
+                if (mapSection) {
+
+                    mapSection.classList.add(
+                        "panel-active"
+                    );
+
+                }
+
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
 
             }
         );
@@ -986,8 +303,247 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-    console.log(
-        "Tu Talento Puede Cambiar el Colegio — plataforma cargada correctamente."
-    );
+    /* =====================================================
+       CREAR PANEL FINAL DE COMUNIDAD
+    ===================================================== */
+
+    if (
+        !document.getElementById(
+            "comunidad"
+        )
+    ) {
+
+        const community =
+            document.createElement(
+                "section"
+            );
+
+
+        community.id =
+            "comunidad";
+
+
+        community.className =
+            "community-panel";
+
+
+        community.innerHTML = `
+
+            <div class="container">
+
+                <div class="community-layout">
+
+                    <div class="community-logo-area">
+
+                        <div class="community-logo-ring"></div>
+
+                        <div class="community-logo-star community-star-one">
+                            ✦
+                        </div>
+
+                        <div class="community-logo-star community-star-two">
+                            ✦
+                        </div>
+
+                        <img
+                            src="/static/images/logo.png"
+                            alt="Tu Talento Puede Cambiar el Colegio"
+                            class="community-logo"
+                        >
+
+                    </div>
+
+
+                    <div class="community-copy">
+
+                        <span class="eyebrow dark-eyebrow">
+                            NUESTRA COMUNIDAD
+                        </span>
+
+                        <h2>
+                            Escanea y sigue
+                            <span>nuestra comunidad</span>
+                        </h2>
+
+                        <p>
+                            Mantente al tanto de las novedades,
+                            propuestas, actividades y nuevas formas
+                            de participar en nuestro colegio.
+                        </p>
+
+
+                        <div class="community-qr-area">
+
+                            <div
+                                id="communityQrContainer"
+                            >
+                                <div class="community-qr-placeholder">
+
+                                    <i class="fa-solid fa-qrcode"></i>
+
+                                    <span>
+                                        AQUÍ IRÁ<br>
+                                        EL QR DE<br>
+                                        NUESTRA RED SOCIAL
+                                    </span>
+
+                                </div>
+                            </div>
+
+
+                            <div class="community-qr-text">
+
+                                <strong>
+                                    Escanea el QR
+                                </strong>
+
+                                <span>
+                                    Síguenos y continúa
+                                    formando parte de nuestra
+                                    comunidad.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        `;
+
+
+        document
+            .querySelector("main")
+            .appendChild(
+                community
+            );
+
+
+        /* Intentar cargar QR */
+
+        const qr =
+            new Image();
+
+
+        qr.src =
+            "/static/images/qr-red-social.png";
+
+
+        qr.className =
+            "community-qr";
+
+
+        qr.alt =
+            "QR de la red social";
+
+
+        qr.onload =
+            () => {
+
+                const container =
+                    document.getElementById(
+                        "communityQrContainer"
+                    );
+
+
+                if (container) {
+
+                    container.innerHTML = "";
+
+                    container.appendChild(
+                        qr
+                    );
+
+                }
+
+            };
+
+
+        /* Si todavía no existe el QR,
+           dejamos el bonito placeholder */
+
+        qr.onerror =
+            () => {
+
+                console.log(
+                    "QR de red social todavía no agregado."
+                );
+
+            };
+
+
+        /* =================================================
+           LINK DEL MENÚ
+        ================================================= */
+
+        if (
+            nav &&
+            !nav.querySelector(
+                '[href="#comunidad"]'
+            )
+        ) {
+
+            const communityLink =
+                document.createElement(
+                    "a"
+                );
+
+
+            communityLink.href =
+                "#comunidad";
+
+
+            communityLink.textContent =
+                "Comunidad";
+
+
+            nav.appendChild(
+                communityLink
+            );
+
+
+            communityLink.addEventListener(
+                "click",
+                (event) => {
+
+                    event.preventDefault();
+
+
+                    const panels =
+                        document.querySelectorAll(
+                            "main > section"
+                        );
+
+
+                    panels.forEach(
+                        (section) => {
+
+                            section.classList.remove(
+                                "panel-active"
+                            );
+
+                        }
+                    );
+
+
+                    community.classList.add(
+                        "panel-active"
+                    );
+
+
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+
+                }
+            );
+
+        }
+
+    }
 
 });

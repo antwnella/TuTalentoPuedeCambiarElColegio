@@ -6,9 +6,9 @@
 # INFORMACIÓN DEL PROYECTO
 # ------------------------------------------------------------
 
-NOMBRE_COLEGIO = "[NOMBRE DEL COLEGIO]"
-ANIO = "[AÑO]"
-INTEGRANTES = "[INTEGRANTES]"
+NOMBRE_COLEGIO = "Juana Alarco de Dammert"
+ANIO = "2026"
+
 
 
 # ------------------------------------------------------------
@@ -35,7 +35,7 @@ GOOGLE_FORM_PROPUESTAS_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeT1cJUgV
 GOOGLE_FORM_PARTICIPACION_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfoO4TMtPDXhgkgAwcqxMZ5FFzvy8B3UMYVwYe0bDVFzQ_VvA/viewform?usp=publish-editor"
 
 # PEGAR AQUÍ EL ENLACE REAL DEL PADLET
-PADLET_URL = ""
+PADLET_URL = "https://padlet.com/1010lccaawa/huellas-que-transforman-s023dzljndz7tvpj4flg"
 
 
 # ------------------------------------------------------------

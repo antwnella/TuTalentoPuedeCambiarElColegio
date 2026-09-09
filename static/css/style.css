@@ -4723,3 +4723,129 @@ section {
     visibility: visible !important;
     opacity: 1 !important;
 }
+
+
+
+
+/* =========================================================
+   MAPA FINAL — 6 CUADRADOS ORDENADOS
+========================================================= */
+
+.map-section .school-map {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    grid-template-rows: repeat(2, 280px) !important;
+    gap: 24px !important;
+
+    width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+
+    padding: 24px !important;
+    box-sizing: border-box !important;
+
+    position: relative !important;
+    overflow: hidden !important;
+
+    border-radius: 30px !important;
+}
+
+/* TODOS los espacios tienen exactamente el mismo tamaño */
+.map-section .school-map .map-space,
+.map-section .school-map .map-yard,
+.map-section .school-map .map-yard-2,
+.map-section .school-map .map-library,
+.map-section .school-map .map-green,
+.map-section .school-map .map-green-2,
+.map-section .school-map .map-sport {
+    position: relative !important;
+
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+
+    grid-column: auto !important;
+    grid-row: auto !important;
+
+    width: 100% !important;
+    height: 280px !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    transform: none !important;
+
+    display: block !important;
+    box-sizing: border-box !important;
+
+    overflow: hidden !important;
+    border-radius: 24px !important;
+}
+
+/* Las imágenes quedan DENTRO de cada cuadrado */
+.map-section .school-map .map-space img {
+    position: absolute !important;
+
+    top: 0 !important;
+    left: 0 !important;
+
+    width: 100% !important;
+    height: 100% !important;
+
+    max-width: none !important;
+    max-height: none !important;
+
+    object-fit: cover !important;
+
+    display: block !important;
+}
+
+/* Franja inferior con nombre */
+.map-section .school-map .map-space-content {
+    position: absolute !important;
+
+    left: 16px !important;
+    right: 16px !important;
+    bottom: 16px !important;
+
+    z-index: 5 !important;
+
+    box-sizing: border-box !important;
+}
+
+/* Mantener el efecto de hover sin mover los cuadros */
+.map-section .school-map .map-space:hover {
+    transform: translateY(-5px) !important;
+    z-index: 10 !important;
+}
+
+
+/* =========================================================
+   CELULAR
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .map-section .school-map {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        grid-template-rows: none !important;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .map-section .school-map {
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+        padding: 16px !important;
+    }
+
+    .map-section .school-map .map-space {
+        height: 250px !important;
+    }
+
+}

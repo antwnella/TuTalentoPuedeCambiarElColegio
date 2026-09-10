@@ -62,7 +62,7 @@
             GOOGLE_FORM_PARTICIPACION_URL:
                 {{ config.GOOGLE_FORM_PARTICIPACION_URL | tojson }},
 
-            PADLET_URL:
+                        PADLET_URL:
                 {{ config.PADLET_URL | tojson }},
 
             QR_IMAGE_PATH:
@@ -1517,15 +1517,13 @@
 
 
         <div class="qr-box">
-
-
-            {% if config.QR_IMAGE_PATH %}
-
-
-                <img
-                    src="{{ config.QR_IMAGE_PATH }}"
-                    alt="Código QR"
-                >
+    {% if config.QR_IMAGE_PATH %}
+        <a href="https://www.instagram.com/talento.que.deja_huella?stkn=cW54bDlkMjF6eDYw" target="_blank" rel="noopener noreferrer">
+            <img
+                src="{{ config.QR_IMAGE_PATH }}"
+                alt="Código QR"
+            >
+        </a>
 
 
             {% else %}

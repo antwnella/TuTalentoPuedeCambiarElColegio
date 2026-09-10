@@ -43,7 +43,7 @@ PADLET_URL = "https://padlet.com/1010lccaawa/huellas-que-transforman-s023dzljndz
 # ------------------------------------------------------------
 
 # COLOCAR AQUÍ EL QR REAL
-QR_IMAGE_PATH = ""
+QR_IMAGE_PATH = "/static/images/QR.png"
 
 
 # ------------------------------------------------------------
